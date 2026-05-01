@@ -20,24 +20,28 @@ function App() {
           image={transitionImages[0].img}
           subtitle={transitionImages[0].subtitle}
           title={transitionImages[0].title}
+          variant="1"
         />
         <FeaturedGallery />
         <ParallaxDivider 
           image={transitionImages[1].img}
           subtitle={transitionImages[1].subtitle}
           title={transitionImages[1].title}
+          variant="2"
         />
         <Story />
         <ParallaxDivider 
           image={transitionImages[2].img}
           subtitle={transitionImages[2].subtitle}
           title={transitionImages[2].title}
+          variant="3"
         />
         <Portfolio />
         <ParallaxDivider 
           image={transitionImages[3].img}
           subtitle={transitionImages[3].subtitle}
           title={transitionImages[3].title}
+          variant="4"
         />
         <Services />
         <Speciality />
@@ -45,6 +49,7 @@ function App() {
           image={transitionImages[4].img}
           subtitle={transitionImages[4].subtitle}
           title={transitionImages[4].title}
+          variant="5"
         />
         <Contact />
       </main>

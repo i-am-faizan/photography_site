@@ -1,8 +1,8 @@
 import React from 'react';
 
-const ParallaxDivider = ({ image, title, subtitle }) => {
+const ParallaxDivider = ({ image, title, subtitle, variant }) => {
     return (
-        <section className="parallax-divider">
+        <section className={`parallax-divider divider-${variant}`}>
             <div 
                 className="bg-image" 
                 style={{ backgroundImage: `url(${image})` }}

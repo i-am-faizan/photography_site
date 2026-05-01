@@ -98,10 +98,12 @@ nav {
 
 /* Hero Section */
 .hero {
-    height: 100vh;
+    height: 120vh;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    padding-top: 35vh; /* Center content visually in the first 100vh */
     position: relative;
     overflow: hidden;
 }
@@ -131,7 +133,7 @@ nav {
 .hero-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to bottom, transparent, var(--bg-color));
+    background: linear-gradient(to bottom, transparent 60%, var(--bg-color) 95%);
 }
 
 .hero-content {
@@ -580,6 +582,28 @@ footer {
     align-items: center;
     justify-content: center;
     background-color: #121212; /* Deep contrast for the transition */
+    margin: -1px 0; /* Prevent sub-pixel gaps between sections */
+    z-index: 5;
+}
+
+.divider-1, .divider-3 {
+    clip-path: ellipse(100% 50% at 50% 50%);
+    margin-top: -10vh;
+    margin-bottom: -10vh;
+    height: 90vh;
+}
+
+.divider-2, .divider-4 {
+    clip-path: polygon(
+        0% 0%, 
+        55% 0%, 58% 12%, 64% 0%, 70% 15%, 76% 2%, 82% 18%, 88% 3%, 94% 20%, 98% 5%, 100% 25%,
+        100% 100%, 
+        45% 100%, 42% 88%, 36% 100%, 30% 85%, 24% 98%, 18% 82%, 12% 97%, 6% 80%, 2% 95%, 0% 75%
+    );
+}
+
+.divider-5 {
+    /* No changes required */
 }
 
 .parallax-divider .bg-image {
