@@ -43,6 +43,14 @@ const Portfolio = () => {
                         className={`filter-btn ${filter === 'birthday' ? 'active' : ''}`} 
                         onClick={() => handleFilterChange('birthday')}
                     >Birthday</button>
+                    <button 
+                        className={`filter-btn ${filter === 'baby' ? 'active' : ''}`} 
+                        onClick={() => handleFilterChange('baby')}
+                    >Baby</button>
+                    <button 
+                        className={`filter-btn ${filter === 'pre-wedding' ? 'active' : ''}`} 
+                        onClick={() => handleFilterChange('pre-wedding')}
+                    >Pre-Wedding</button>
                 </div>
             </div>
 

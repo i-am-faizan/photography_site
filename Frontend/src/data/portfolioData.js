@@ -7,6 +7,8 @@ export const portfolioItems = [
     { id: 6, category: 'party', img: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=800&q=80', title: 'Electric Night', subtitle: 'Celebration • Berlin' },
     { id: 7, category: 'birthday', img: 'https://images.unsplash.com/photo-1464349172961-1fee4652028a?auto=format&fit=crop&w=800&q=80', title: 'Candlelight Glow', subtitle: 'Private Event • London' },
     { id: 8, category: 'commercial', img: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80', title: 'Structured Grace', subtitle: 'Architecture • Dubai' },
+    { id: 13, category: 'baby', img: 'https://images.unsplash.com/photo-1519689689378-073f13d31c63?auto=format&fit=crop&w=800&q=80', title: 'Pure Innocence', subtitle: 'Newborn Series • Paris' },
+    { id: 14, category: 'pre-wedding', img: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80', title: 'Eternal Promise', subtitle: 'Pre-Wedding • Venice' },
 ];
 
 export const extraItems = [
@@ -14,6 +16,8 @@ export const extraItems = [
     { id: 10, category: 'wedding', img: 'https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=800&q=80', title: 'The Quiet Vow', subtitle: 'Portrait Series' },
     { id: 11, category: 'party', img: 'https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=800&q=80', title: 'Neon Pulse', subtitle: 'Afterhours • Ibiza' },
     { id: 12, category: 'commercial', img: 'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?auto=format&fit=crop&w=800&q=80', title: 'Silent Peak', subtitle: 'Nature Editorial' },
+    { id: 15, category: 'baby', img: 'https://images.unsplash.com/photo-1544126592-807daa2b5282?auto=format&fit=crop&w=800&q=80', title: 'Gentle Dreams', subtitle: 'Portrait • London' },
+    { id: 16, category: 'pre-wedding', img: 'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=800&q=80', title: 'Golden Hour Vows', subtitle: 'Sunset Session • Bali' },
 ];
 
 export const transitionImages = [
