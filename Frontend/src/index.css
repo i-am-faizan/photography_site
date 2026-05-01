@@ -189,6 +189,7 @@ nav {
     transition: var(--transition-slow);
     cursor: pointer;
     border: 1px solid var(--accent-color);
+    flex-shrink: 0; /* Prevent squashing in flex container */
 }
 
 .gallery-frame img {
@@ -196,6 +197,7 @@ nav {
     height: 100%;
     object-fit: cover;
     transition: var(--transition-slow);
+    border-radius: inherit; /* Ensure image follows frame shape */
 }
 
 .gallery-frame:hover img {
@@ -323,49 +325,95 @@ section {
 }
 
 .portfolio-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-    gap: 2rem;
+    column-count: 3;
+    column-gap: 2rem;
+    display: block; /* Overriding grid */
 }
 
 .portfolio-item {
     position: relative;
     overflow: hidden;
-    aspect-ratio: 3/2;
+    margin-bottom: 2rem;
+    break-inside: avoid;
     background: var(--surface-color);
     opacity: 0;
     transform: translateY(20px);
+    transition: var(--transition-slow);
+    cursor: pointer;
 }
 
 .portfolio-item.show {
     animation: fadeInUp 0.6s forwards;
 }
 
+/* Every image looks different */
+.portfolio-item:nth-child(odd) {
+    border-radius: 60px 10px 60px 10px;
+    margin-top: 2rem;
+}
+
+.portfolio-item:nth-child(even) {
+    border-radius: 10px 60px 10px 60px;
+}
+
+.portfolio-item:nth-child(3n) {
+    border-radius: 120px 120px 0 0;
+    margin-bottom: 4rem;
+}
+
+.portfolio-item:nth-child(4n) {
+    border-radius: 0 0 120px 120px;
+    transform: translateY(-20px);
+}
+
+.portfolio-item:nth-child(5n) {
+    border-radius: 100px 0 100px 0;
+}
+
+.portfolio-item:nth-child(6n) {
+    border-radius: 80px;
+}
+
 .portfolio-item img {
     width: 100%;
-    height: 100%;
+    height: auto;
+    display: block;
     object-fit: cover;
     transition: var(--transition-slow);
 }
 
 .portfolio-item:hover img {
-    transform: scale(1.05);
+    transform: scale(1.08);
 }
 
 .portfolio-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(0,0,0,0.6);
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    padding: 2rem;
+    padding: 2.5rem;
     opacity: 0;
+    backdrop-filter: blur(4px);
     transition: var(--transition-fast);
 }
 
 .portfolio-item:hover .portfolio-overlay {
     opacity: 1;
+}
+
+.portfolio-overlay h3 {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.portfolio-overlay p {
+    color: rgba(255,255,255,0.8);
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
 }
 
 .load-more-container {
@@ -504,8 +552,11 @@ footer {
         grid-template-columns: 1fr;
     }
     .portfolio-grid {
-        grid-template-columns: 1fr;
+        column-count: 1;
     }
+}
+
+@media (max-width: 768px) {
     .gallery-container {
         flex-direction: column;
         gap: 4rem;
@@ -515,6 +566,7 @@ footer {
         max-width: 400px;
         height: 500px;
         transform: none !important;
+        border-radius: 20px !important; /* Simplified but elegant for mobile */
     }
 }
 
