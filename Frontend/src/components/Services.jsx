@@ -1,3 +1,67 @@
+import { motion, useMotionValue, useTransform } from 'framer-motion';
+
+const ServiceCard = ({ service, index }) => {
+    const x = useMotionValue(0);
+    const y = useMotionValue(0);
+
+    // Parallax values for the 2.5D effect
+    const avatarX = useTransform(x, [-200, 200], [-15, 15]);
+    const avatarY = useTransform(y, [-200, 200], [-15, 15]);
+    
+    const bgX = useTransform(x, [-200, 200], [5, -5]);
+    const bgY = useTransform(y, [-200, 200], [5, -5]);
+
+    const handleMouseMove = (e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        x.set(e.clientX - rect.left - rect.width / 2);
+        y.set(e.clientY - rect.top - rect.height / 2);
+    };
+
+    const handleMouseLeave = () => {
+        x.set(0);
+        y.set(0);
+    };
+
+    return (
+        <div className="service-card-wrapper" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
+            <div className="service-card">
+                <div className="service-card-border"></div>
+
+                {/* Layer A: Background / Card Body */}
+                <motion.div className="service-card-bg" style={{ x: bgX, y: bgY }}>
+                    <div className="card-texture"></div>
+                    <div className="burning-overlay" style={{ backgroundImage: `url(${service.image})` }}></div>
+                </motion.div>
+
+                {/* Layer B: Frosted Glass Panel */}
+                <div className="glass-panel"></div>
+
+                {/* Layer C: Avatar Stack with Masking */}
+                <div className="avatar-parallax-container">
+                    <motion.div 
+                        className="avatar-wrapper"
+                        style={{ x: avatarX, y: avatarY }}
+                    >
+                        <div className="avatar-shadow"></div>
+                        <img src={service.image} alt={service.title} className="avatar-img" />
+                        <div className="avatar-badge">
+                            {service.icon}
+                        </div>
+                    </motion.div>
+                </div>
+
+                <div className="service-content">
+                    <h3>{service.title}</h3>
+                    <p>{service.desc}</p>
+                    <div className="service-footer">
+                        <span className="explore-btn">Discover More</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
 const Services = () => {
     const services = [
         {
@@ -46,22 +110,7 @@ const Services = () => {
             </div>
             <div className="services-grid">
                 {services.map((service, index) => (
-                    <div key={index} className="service-card">
-                        <div className="service-card-border"></div>
-                        <div className="service-content">
-                            <div className="icon-wrapper">
-                                {service.icon}
-                                <div className="icon-glow"></div>
-                            </div>
-                            <h3>{service.title}</h3>
-                            <p>{service.desc}</p>
-                            <div className="service-footer">
-                                <span className="explore-btn">Discover More</span>
-                            </div>
-                        </div>
-                        <div className="card-texture"></div>
-                        <div className="burning-overlay" style={{ backgroundImage: `url(${service.image})` }}></div>
-                    </div>
+                    <ServiceCard key={index} service={service} index={index} />
                 ))}
             </div>
         </section>

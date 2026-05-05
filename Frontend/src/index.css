@@ -521,18 +521,24 @@ section {
     margin: 0 auto;
 }
 
+.service-card-wrapper {
+    margin-top: 5rem;
+    perspective: 1000px;
+}
+
 .service-card {
     position: relative;
-    padding: 4rem 3rem;
-    background: var(--bg-color);
-    border: 1px solid var(--accent-color);
+    padding: 7rem 3rem 4rem; /* Increased top padding */
+    background: transparent;
+    border: none;
     transition: var(--transition-slow);
-    overflow: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     cursor: pointer;
+    border-radius: 20px;
+    transform-style: preserve-3d;
 }
 
 .service-card-border {
@@ -542,6 +548,8 @@ section {
     opacity: 0.3;
     pointer-events: none;
     transition: var(--transition-fast);
+    border-radius: 12px;
+    z-index: 3;
 }
 
 .service-card:hover .service-card-border {
@@ -550,42 +558,132 @@ section {
     opacity: 0.8;
 }
 
-.icon-wrapper {
+.glass-panel {
+    position: absolute;
+    inset: 5px;
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    z-index: 1;
+    pointer-events: none;
+    transition: var(--transition-slow);
+}
+
+.service-card:hover .glass-panel {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(176, 141, 26, 0.3);
+}
+
+.avatar-parallax-container {
+    position: absolute;
+    top: -60px; /* Pop out of the top edge */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 140px;
+    height: 160px;
+    z-index: 10;
+    clip-path: inset(-100px -100px 0 -100px); /* Masks the bottom exactly at 0 */
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.avatar-wrapper {
     position: relative;
-    width: 80px;
-    height: 80px;
-    margin-bottom: 2.5rem;
+    width: 130px;
+    height: 150px;
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+.avatar-shadow {
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70%;
+    height: 15px;
+    background: rgba(0, 0, 0, 0.8);
+    filter: blur(8px);
+    border-radius: 50%;
+    z-index: 1;
+    transition: var(--transition-slow);
+}
+
+.avatar-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 65px 65px 0 0; /* Arch shape so base is flat */
+    border: 3px solid var(--primary-color);
+    border-bottom: none; /* remove border where masked */
+    z-index: 2;
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: floatAvatar 6s ease-in-out infinite;
+}
+
+.avatar-badge {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    width: 40px;
+    height: 40px;
+    background: var(--bg-color);
+    border: 2px solid var(--primary-color);
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 3;
     transition: var(--transition-slow);
+    animation: floatAvatar 6s ease-in-out infinite;
+    animation-delay: 0.2s; /* slight offset from avatar float */
 }
 
 .service-icon {
-    width: 40px;
-    height: 40px;
+    width: 20px;
+    height: 20px;
     color: var(--primary-color);
     transition: var(--transition-slow);
-    z-index: 2;
 }
 
-.icon-glow {
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle, var(--primary-color) 0%, transparent 70%);
-    opacity: 0;
-    transform: scale(0.5);
-    transition: var(--transition-slow);
+.service-card:hover .avatar-img {
+    transform: translateY(-15px) scale(1.05);
+    border-color: #ffffff;
+    filter: drop-shadow(0 15px 25px rgba(176, 141, 26, 0.4));
 }
 
-.service-card:hover .icon-glow {
-    opacity: 0.2;
-    transform: scale(1.5);
+.service-card:hover .avatar-shadow {
+    width: 90%;
+    opacity: 0.5;
+    filter: blur(12px);
+}
+
+.service-card:hover .avatar-badge {
+    transform: translateY(-20px) scale(1.2);
+    border-color: #ffffff;
+    background: var(--primary-color);
 }
 
 .service-card:hover .service-icon {
     color: #ffffff;
-    transform: scale(1.1) rotate(5deg);
+}
+
+/* Removed unused hover styles for avatar-bg */
+
+@keyframes floatAvatar {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-12px); }
+    100% { transform: translateY(0px); }
+}
+
+@keyframes pulseAvatar {
+    0% { transform: scale(1); opacity: 0.15; }
+    50% { transform: scale(1.1); opacity: 0.25; }
+    100% { transform: scale(1); opacity: 0.15; }
 }
 
 .service-card h3 {
@@ -594,6 +692,8 @@ section {
     margin-bottom: 1.5rem;
     letter-spacing: 0.1em;
     transition: var(--transition-fast);
+    position: relative;
+    z-index: 2;
 }
 
 .service-card p {
@@ -602,6 +702,8 @@ section {
     line-height: 1.8;
     margin-bottom: 2.5rem;
     transition: var(--transition-fast);
+    position: relative;
+    z-index: 2;
 }
 
 .service-footer {
@@ -609,6 +711,8 @@ section {
     opacity: 0;
     transform: translateY(10px);
     transition: var(--transition-fast);
+    position: relative;
+    z-index: 2;
 }
 
 .explore-btn {
@@ -623,6 +727,22 @@ section {
 .service-card:hover .service-footer {
     opacity: 1;
     transform: translateY(0);
+}
+
+.service-card-bg {
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    background: var(--bg-color);
+    border: 1px solid var(--accent-color);
+    overflow: hidden;
+    z-index: 0;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-card:hover .service-card-bg {
+    border-color: var(--primary-color);
+    box-shadow: 0 30px 60px rgba(176, 141, 26, 0.15);
 }
 
 .card-texture {
@@ -662,13 +782,12 @@ section {
 .service-card:hover h3, .service-card:hover p {
     color: #ffffff;
     position: relative;
-    z-index: 2;
+    z-index: 4;
 }
 
+/* Service card hover translation handled by CSS or Framer, we use CSS for lift */
 .service-card:hover {
-    transform: translateY(-15px);
-    box-shadow: 0 30px 60px rgba(176, 141, 26, 0.2);
-    border-color: var(--primary-color);
+    /* Slight lift, but parallax does the major work */
 }
 
 /* Speciality Section */
