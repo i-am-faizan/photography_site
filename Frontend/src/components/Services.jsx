@@ -44,6 +44,7 @@ const Services = () => {
             subtitle: "Cinematic vows and timeless storytelling",
             longDescription: "Our wedding coverage blends editorial direction with documentary honesty. We shape elegant portraits, preserve the atmosphere of the day, and capture fleeting emotional details so your full celebration feels immersive long after the event is over.",
             color: "linear-gradient(135deg, #e52d4c, #b60a2b)",
+            panelColor: "linear-gradient(135deg, #b62543 0%, #86182f 100%)",
             image: "/assets/tanrica-ai-generated-9519468.png"
         },
         {
@@ -52,6 +53,7 @@ const Services = () => {
             subtitle: "Joyful celebrations with a polished finish",
             longDescription: "Birthday sessions are designed to feel vibrant, personal, and effortless. From styled portraits to candid interactions, we create a visual record that highlights the energy of the celebration while still feeling refined and beautifully composed.",
             color: "linear-gradient(135deg, #185aab, #0f3669)",
+            panelColor: "linear-gradient(135deg, #1b65c2 0%, #134791 100%)",
             image: "/assets/semja-ai-generated-7840987.png"
         },
         {
@@ -60,6 +62,7 @@ const Services = () => {
             subtitle: "Brand-focused imagery with human presence",
             longDescription: "Our commercial photography is built for brands that want clarity, polish, and emotion in the same frame. We combine purposeful art direction with clean production to deliver visuals that strengthen campaigns, websites, launches, and internal storytelling.",
             color: "linear-gradient(135deg, #408140, #225122)",
+            panelColor: "linear-gradient(135deg, #4a9950 0%, #2b6d33 100%)",
             image: "/assets/lucianavieira-businessman-6718509.png"
         },
         {
@@ -68,6 +71,7 @@ const Services = () => {
             subtitle: "Soft, intimate moments for growing families",
             longDescription: "Baby sessions focus on tenderness, comfort, and natural connection. We use a calm pace and gentle styling to create images that feel warm and expressive, preserving the quiet beauty of early family memories without making the experience feel forced.",
             color: "linear-gradient(135deg, #202b4d, #11172a)",
+            panelColor: "linear-gradient(135deg, #324678 0%, #1a2544 100%)",
             image: "/assets/thehappygraphics-fairy-8065764.png"
         }
     ];
@@ -128,27 +132,45 @@ const Services = () => {
                             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                             onClick={(event) => event.stopPropagation()}
                         >
-                            <button
-                                type="button"
-                                className="service-modal-close"
-                                onClick={() => setSelectedService(null)}
-                                aria-label="Close service details"
-                            >
-                                Close
-                            </button>
-                            <div className="service-modal-media" style={{ background: selectedService.color }}>
-                                <motion.img
-                                    src={selectedService.image}
-                                    alt={selectedService.name}
-                                    className="service-modal-image"
-                                    layoutId={`service-image-${selectedService.name}`}
-                                />
+                            <div className="service-modal-topbar">
+                                <div className="service-modal-brand">
+                                    <span className="service-modal-brand-mark">Stitch</span>
+                                    <span className="service-modal-brand-sub">Characters</span>
+                                </div>
+                                <div className="service-modal-search">Search services...</div>
+                                <div className="service-modal-menu">Menu</div>
                             </div>
-                            <div className="service-modal-content">
-                                <span className="service-modal-label">Our Service</span>
-                                <h3>{selectedService.name}</h3>
-                                <p className="service-modal-subtitle">{selectedService.subtitle}</p>
-                                <p className="service-modal-description">{selectedService.longDescription}</p>
+                            <div className="service-modal-body">
+                                <div className="service-modal-rail">
+                                    <span className="service-modal-chevron">⌄</span>
+                                </div>
+                                <div className="service-modal-stage">
+                                    <div className="service-modal-media">
+                                        <motion.img
+                                            src={selectedService.image}
+                                            alt={selectedService.name}
+                                            className="service-modal-image"
+                                            layoutId={`service-image-${selectedService.name}`}
+                                        />
+                                    </div>
+                                    <div className="service-modal-panel" style={{ background: selectedService.panelColor }}>
+                                        <button
+                                            type="button"
+                                            className="service-modal-close"
+                                            onClick={() => setSelectedService(null)}
+                                            aria-label="Close service details"
+                                        >
+                                            × Close
+                                        </button>
+                                        <div className="service-modal-content">
+                                            <span className="service-modal-label">Our Service</span>
+                                            <h3>{selectedService.name}</h3>
+                                            <p className="service-modal-subtitle">{selectedService.subtitle}</p>
+                                            <p className="service-modal-description">{selectedService.longDescription}</p>
+                                            <p className="service-modal-footnote">Clips</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </motion.div>
                     </motion.div>
