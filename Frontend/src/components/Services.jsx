@@ -1,6 +1,12 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
+const characterImageLayoutTransition = {
+    type: 'tween',
+    ease: 'linear',
+    duration: 0.35
+};
+
 const ServiceCard = ({ service, index, onSelect }) => {
     return (
         <motion.div
@@ -19,6 +25,7 @@ const ServiceCard = ({ service, index, onSelect }) => {
                         alt={service.name}
                         className="character-image"
                         layoutId={`service-image-${service.name}`}
+                        transition={characterImageLayoutTransition}
                     />
                 </div>
 
@@ -140,6 +147,7 @@ const Services = () => {
                                             alt={selectedService.name}
                                             className="service-modal-image"
                                             layoutId={`service-image-${selectedService.name}`}
+                                            transition={characterImageLayoutTransition}
                                         />
                                     </div>
                                     <div className="service-modal-panel" style={{ background: selectedService.panelColor }}>
