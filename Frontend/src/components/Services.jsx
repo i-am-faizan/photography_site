@@ -42,8 +42,8 @@ const Services = () => {
             image: "/assets/semja-ai-generated-7840987.png"
         },
         {
-            name: "Party",
-            desc: "Vibrant Celebrations",
+            name: "Commercial",
+            desc: "Office Celebrations",
             color: "linear-gradient(135deg, #408140, #225122)",
             image: "/assets/lucianavieira-businessman-6718509.png"
         },
