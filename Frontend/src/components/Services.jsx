@@ -132,18 +132,7 @@ const Services = () => {
                             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                             onClick={(event) => event.stopPropagation()}
                         >
-                            <div className="service-modal-topbar">
-                                <div className="service-modal-brand">
-                                    <span className="service-modal-brand-mark">Stitch</span>
-                                    <span className="service-modal-brand-sub">Characters</span>
-                                </div>
-                                <div className="service-modal-search">Search services...</div>
-                                <div className="service-modal-menu">Menu</div>
-                            </div>
                             <div className="service-modal-body">
-                                <div className="service-modal-rail">
-                                    <span className="service-modal-chevron">⌄</span>
-                                </div>
                                 <div className="service-modal-stage">
                                     <div className="service-modal-media">
                                         <motion.img
