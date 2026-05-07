@@ -157,7 +157,7 @@ const Services = () => {
                                             onClick={() => setSelectedService(null)}
                                             aria-label="Close service details"
                                         >
-                                            × Close
+                                            ×
                                         </button>
                                         <div className="service-modal-content">
                                             <span className="service-modal-label">Our Service</span>
