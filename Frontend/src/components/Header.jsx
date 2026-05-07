@@ -1,46 +1,45 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
-const Header = () => {
-    const [scrolled, setScrolled] = useState(false);
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+const Header = ({ siteSettings }) => {
+  const [scrolled, setScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navLinks = [...(siteSettings?.navLinks || [])].sort((a, b) => a.sortOrder - b.sortOrder);
 
-    useEffect(() => {
-        const handleScroll = () => {
-            if (window.scrollY > 50) {
-                setScrolled(true);
-            } else {
-                setScrolled(false);
-            }
-        };
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
 
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-    const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-    const closeMenu = () => setIsMenuOpen(false);
+  const toggleMenu = () => setIsMenuOpen((prev) => !prev);
+  const closeMenu = () => setIsMenuOpen(false);
 
-    return (
-        <header id="header" className={`${scrolled ? 'scrolled' : ''} ${isMenuOpen ? 'menu-open' : ''}`}>
-            <nav>
-                <a href="#" className="logo" onClick={closeMenu}>STITCH</a>
-                
-                <div className={`nav-links ${isMenuOpen ? 'active' : ''}`}>
-                    <a href="#hero" onClick={closeMenu}>Home</a>
-                    <a href="#story" onClick={closeMenu}>Story</a>
-                    <a href="#portfolio" onClick={closeMenu}>Portfolio</a>
-                    <a href="#services" onClick={closeMenu}>Services</a>
-                    <a href="#contact" onClick={closeMenu}>Contact</a>
-                </div>
+  return (
+    <header id="header" className={`${scrolled ? "scrolled" : ""} ${isMenuOpen ? "menu-open" : ""}`}>
+      <nav>
+        <a href="#" className="logo" onClick={closeMenu}>
+          {siteSettings?.brandName || "STITCH"}
+        </a>
 
-                <button className={`hamburger ${isMenuOpen ? 'active' : ''}`} onClick={toggleMenu} aria-label="Menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </nav>
-        </header>
-    );
+        <div className={`nav-links ${isMenuOpen ? "active" : ""}`}>
+          {navLinks.map((link) => (
+            <a key={`${link.href}-${link.label}`} href={link.href} onClick={closeMenu}>
+              {link.label}
+            </a>
+          ))}
+        </div>
+
+        <button className={`hamburger ${isMenuOpen ? "active" : ""}`} onClick={toggleMenu} aria-label="Menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </nav>
+    </header>
+  );
 };
 
 export default Header;

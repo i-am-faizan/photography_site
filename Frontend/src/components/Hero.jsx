@@ -1,111 +1,118 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { heroImages } from '../data/portfolioData';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { getImageUrl } from "../lib/contentUtils";
 
-const Hero = () => {
-    const [currentIndex, setCurrentIndex] = useState(Math.floor(heroImages.length / 2));
-    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-    const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth > 1600);
+const Hero = ({ hero }) => {
+  const heroImages = hero?.images || [];
+  const [currentIndex, setCurrentIndex] = useState(Math.floor(Math.max(heroImages.length, 1) / 2));
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth > 1600);
 
-    useEffect(() => {
-        const handleResize = () => {
-            setIsMobile(window.innerWidth < 768);
-            setIsLargeScreen(window.innerWidth > 1600);
-        };
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+      setIsLargeScreen(window.innerWidth > 1600);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setCurrentIndex((prev) => (prev + 1) % heroImages.length);
-        }, 4000);
-        return () => clearInterval(interval);
-    }, []);
+  useEffect(() => {
+    if (!heroImages.length) {
+      return undefined;
+    }
 
-    return (
-        <section id="hero" className="hero">
-            <div className="hero-content">
-                <h1>Capturing Timeless Moments</h1>
-            </div>
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % heroImages.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [heroImages.length]);
 
-            <div className="hero-carousel-container">
-                <button className="carousel-nav-btn prev-btn" onClick={() => setCurrentIndex((prev) => (prev - 1 + heroImages.length) % heroImages.length)}>
-                    &#10094;
-                </button>
+  return (
+    <section id="hero" className="hero">
+      <div className="hero-content">
+        <h1>{hero?.heading}</h1>
+        {hero?.subheading ? <p className="hero-subheading">{hero.subheading}</p> : null}
+      </div>
 
-                <div className="hero-carousel">
-                    {heroImages.map((src, index) => {
-                        let offset = index - currentIndex;
+      <div className="hero-carousel-container">
+        <button
+          className="carousel-nav-btn prev-btn"
+          onClick={() => setCurrentIndex((prev) => (prev - 1 + heroImages.length) % heroImages.length)}
+        >
+          &#10094;
+        </button>
 
-                        // Handle wrap around for smooth infinite feel
-                        if (offset < -Math.floor(heroImages.length / 2)) {
-                            offset += heroImages.length;
-                        }
-                        if (offset > Math.floor(heroImages.length / 2)) {
-                            offset -= heroImages.length;
-                        }
+        <div className="hero-carousel">
+          {heroImages.map((image, index) => {
+            let offset = index - currentIndex;
 
-                        const isCenter = offset === 0;
-                        const sign = Math.sign(offset);
-                        const absOffset = Math.abs(offset);
+            if (offset < -Math.floor(heroImages.length / 2)) {
+              offset += heroImages.length;
+            }
+            if (offset > Math.floor(heroImages.length / 2)) {
+              offset -= heroImages.length;
+            }
 
-                        // Responsive 3D Math properties
-                        const zTranslate = isCenter ? 0 : -absOffset * (isMobile ? 100 : (isLargeScreen ? 200 : 150));
-                        
-                        let xMultiplier = 220;
-                        if (isMobile) xMultiplier = 120;
-                        else if (isLargeScreen) xMultiplier = window.innerWidth > 2000 ? 400 : 320;
+            const isCenter = offset === 0;
+            const sign = Math.sign(offset);
+            const absOffset = Math.abs(offset);
+            const zTranslate = isCenter ? 0 : -absOffset * (isMobile ? 100 : isLargeScreen ? 200 : 150);
 
-                        const xTranslate = offset * xMultiplier;
-                        const rotateY = isCenter ? 0 : -sign * (isMobile ? 25 : 35);
+            let xMultiplier = 220;
+            if (isMobile) {
+              xMultiplier = 120;
+            } else if (isLargeScreen) {
+              xMultiplier = window.innerWidth > 2000 ? 400 : 320;
+            }
 
-                        const handleDragEnd = (event, info) => {
-                            const swipeThreshold = 50;
-                            if (info.offset.x > swipeThreshold) {
-                                // swiped right
-                                setCurrentIndex((prev) => (prev - 1 + heroImages.length) % heroImages.length);
-                            } else if (info.offset.x < -swipeThreshold) {
-                                // swiped left
-                                setCurrentIndex((prev) => (prev + 1) % heroImages.length);
-                            }
-                        };
+            const xTranslate = offset * xMultiplier;
+            const rotateY = isCenter ? 0 : -sign * (isMobile ? 25 : 35);
 
-                        return (
-                            <motion.div
-                                key={src}
-                                className={`hero-card ${isCenter ? 'active' : ''}`}
-                                animate={{
-                                    x: xTranslate,
-                                    z: zTranslate,
-                                    rotateY: rotateY,
-                                    scale: isCenter ? 1 : 1 - (absOffset * 0.1),
-                                    opacity: absOffset > 2 ? 0 : 1, // Only show 5 items max
-                                    zIndex: heroImages.length - absOffset,
-                                }}
-                                transition={{
-                                    duration: 0.8,
-                                    ease: "easeInOut"
-                                }}
-                                drag="x"
-                                dragConstraints={{ left: 0, right: 0 }}
-                                dragElastic={0.2}
-                                onDragEnd={handleDragEnd}
-                                onClick={() => setCurrentIndex(index)}
-                            >
-                                <img src={src} alt={`Hero ${index + 1}`} />
-                                <div className="card-glare"></div>
-                            </motion.div>
-                        );
-                    })}
-                </div>
+            const handleDragEnd = (_event, info) => {
+              const swipeThreshold = 50;
+              if (info.offset.x > swipeThreshold) {
+                setCurrentIndex((prev) => (prev - 1 + heroImages.length) % heroImages.length);
+              } else if (info.offset.x < -swipeThreshold) {
+                setCurrentIndex((prev) => (prev + 1) % heroImages.length);
+              }
+            };
 
-                <button className="carousel-nav-btn next-btn" onClick={() => setCurrentIndex((prev) => (prev + 1) % heroImages.length)}>
-                    &#10095;
-                </button>
-            </div>
-        </section>
-    );
+            return (
+              <motion.div
+                key={image.url || index}
+                className={`hero-card ${isCenter ? "active" : ""}`}
+                animate={{
+                  x: xTranslate,
+                  z: zTranslate,
+                  rotateY,
+                  scale: isCenter ? 1 : 1 - absOffset * 0.1,
+                  opacity: absOffset > 2 ? 0 : 1,
+                  zIndex: heroImages.length - absOffset
+                }}
+                transition={{
+                  duration: 0.8,
+                  ease: "easeInOut"
+                }}
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.2}
+                onDragEnd={handleDragEnd}
+                onClick={() => setCurrentIndex(index)}
+              >
+                <img src={getImageUrl(image)} alt={image.alt || `Hero ${index + 1}`} />
+                <div className="card-glare"></div>
+              </motion.div>
+            );
+          })}
+        </div>
+
+        <button className="carousel-nav-btn next-btn" onClick={() => setCurrentIndex((prev) => (prev + 1) % heroImages.length)}>
+          &#10095;
+        </button>
+      </div>
+    </section>
+  );
 };
 
 export default Hero;
