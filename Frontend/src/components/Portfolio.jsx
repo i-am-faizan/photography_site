@@ -23,7 +23,7 @@ const Portfolio = () => {
         <section id="portfolio">
             <div className="portfolio-header">
                 <div>
-                    <h2 style={{ fontSize: '3rem', color: 'var(--primary-color)' }}>Selected Works</h2>
+                    <h2 className="section-title">Selected Works</h2>
                     <p style={{ color: 'var(--text-muted)', maxWidth: '400px' }}>A curated collection of human connection and light across the globe.</p>
                 </div>
                 <div className="filters">

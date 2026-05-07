@@ -3,7 +3,7 @@ const Speciality = () => {
         <section id="speciality" className="speciality">
             <div className="spec-grid">
                 <div>
-                    <h2 style={{ fontSize: '3rem', color: 'var(--primary-color)', marginBottom: '2rem' }}>Our Speciality</h2>
+                    <h2 className="section-title">Our Speciality</h2>
                     <p style={{ marginBottom: '3rem' }}>We specialize in "Quiet Luxury" photography—where every image feels effortless yet deeply intentional. Our technical mastery combined with an artistic soul allows us to capture what others miss.</p>
                     <ul style={{ listStyle: 'none', color: 'var(--text-muted)' }}>
                         <li style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>

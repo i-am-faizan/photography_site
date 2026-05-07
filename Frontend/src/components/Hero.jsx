@@ -4,6 +4,17 @@ import { heroImages } from '../data/portfolioData';
 
 const Hero = () => {
     const [currentIndex, setCurrentIndex] = useState(Math.floor(heroImages.length / 2));
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+    const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth > 1600);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 768);
+            setIsLargeScreen(window.innerWidth > 1600);
+        };
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -39,11 +50,15 @@ const Hero = () => {
                         const sign = Math.sign(offset);
                         const absOffset = Math.abs(offset);
 
-                        // 3D Math properties
-                        const zTranslate = isCenter ? 0 : -Math.abs(offset) * 150;
-                        // Increased xTranslate from 160 to 220 to add more space on the sides
-                        const xTranslate = offset * 220;
-                        const rotateY = isCenter ? 0 : -sign * 35; // 35 degrees tilt
+                        // Responsive 3D Math properties
+                        const zTranslate = isCenter ? 0 : -absOffset * (isMobile ? 100 : (isLargeScreen ? 200 : 150));
+                        
+                        let xMultiplier = 220;
+                        if (isMobile) xMultiplier = 120;
+                        else if (isLargeScreen) xMultiplier = window.innerWidth > 2000 ? 400 : 320;
+
+                        const xTranslate = offset * xMultiplier;
+                        const rotateY = isCenter ? 0 : -sign * (isMobile ? 25 : 35);
 
                         const handleDragEnd = (event, info) => {
                             const swipeThreshold = 50;
