@@ -1807,10 +1807,15 @@ footer>* {
 }
 
 .admin-topbar {
+    position: relative !important;
+    z-index: 1000;
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 2rem;
+    padding: 2rem !important;
+    width: 100% !important;
+    transition: none !important;
 }
 
 .admin-topbar-actions,
