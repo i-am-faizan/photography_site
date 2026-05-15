@@ -14,10 +14,12 @@ import { uploadImageBuffer, deleteCloudinaryAsset } from "../lib/cloudinary.js";
 const router = express.Router();
 const upload = multer({ storage: multer.memoryStorage() });
 
+const isProduction = process.env.NODE_ENV === "production";
+
 const cookieOptions = {
   httpOnly: true,
-  sameSite: "lax",
-  secure: process.env.NODE_ENV === "production",
+  sameSite: isProduction ? "none" : "lax",
+  secure: isProduction,
   maxAge: 1000 * 60 * 60 * 24 * 7
 };
 

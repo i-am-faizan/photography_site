@@ -9,6 +9,7 @@ import publicRoutes from "./src/routes/public.js";
 import adminRoutes from "./src/routes/admin.js";
 
 const app = express();
+app.set("trust proxy", 1);
 const port = Number(process.env.PORT || 4000);
 
 app.use(
