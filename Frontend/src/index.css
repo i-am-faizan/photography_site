@@ -567,7 +567,7 @@ nav {
 
 @media (max-width: 768px) {
     .bento-section {
-        padding: 4rem 1.5rem;
+        padding: 8rem 1.5rem 4rem;
     }
 
     .bento-col {
@@ -1463,7 +1463,7 @@ footer>* {
     header,
     section,
     footer {
-        padding: 4rem 2rem;
+        padding: 8rem 2rem 4rem;
     }
 
     #contact {
