@@ -5,8 +5,8 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
-import publicRoutes from "./routes/public.js";
-import adminRoutes from "./routes/admin.js";
+import publicRoutes from "./src/routes/public.js";
+import adminRoutes from "./src/routes/admin.js";
 
 const app = express();
 const port = Number(process.env.PORT || 4000);
